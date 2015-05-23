@@ -1,0 +1,34 @@
+<div class="page-header">
+    <h1>PhotoGallery!<small><a class="btn btn-link btn-block" href="">Logout</a></small></h1>
+    <form action="http://localhost/photo_gallery/services/photo_upload.php" enctype="multipart/form-data" method="POST">
+        <p><input type="file" name="fileToUpload" required /></p>
+        <label>Caption:</label><input   type="text" name="caption" value="" required title="Caption" maxlength="30"/>
+        <input type="submit" name="submit" value="Upload" />
+</form>
+</div>
+
+
+<div class="container">
+    <table class="table-striped table-bordered">
+        <thead class="success">
+        <tr class="info">
+            <th>Image</th>
+            <th>Filename</th>
+            <th>Caption</th>
+            <th>Size</th>
+            <th>Type</th>
+            <th>Comments</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="x in Photos">
+            <td><a href="#view5/{{x.id}}"><img  class="img-polaroid" ng-src="{{x.path}}" width="100" height="100"/></a></td>
+            <td>{{ x.filename }}</td>
+            <td>{{ x.caption }}</td>
+            <td>{{ x.size }}</td>
+            <td>{{ x.type }}</td>
+            <td>{{x.path}}</td>
+            <td><a class="btn btn-danger" ng-controller='deleteCtrl' ng-click="delete_img(x.id)">Delete</a></td>
+        </tr>
+    </table>
+</div>

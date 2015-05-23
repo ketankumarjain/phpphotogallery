@@ -1,0 +1,49 @@
+<a href="#view1">&laquo; Back</a><br />
+<br />
+
+
+<div class="row-fluid">
+    <section class="container">
+        <div class="row-fluid">
+                    <div>
+                        <img ng-src="{{photo.path}}" height="500" width="1000" />
+                        <h4>{{photo.caption}}</h4>
+                    </div>
+        </div>
+    </section>
+</div>
+
+<div id="comment-form" >
+    <h3>New Comment</h3>
+    <form  ng-controller="postCtrl" ng-submit="postComment()">
+        <table>
+            <tr>
+                <td>Your name:</td>
+                <td><input id="author" type="text" name="author" ng-model="comment.author"  required=""/></td>
+            </tr>
+            <tr>
+                <td>Your comment:</td>
+                <td><textarea id="body" name="body" cols="40" rows="2" ng-model="comment.body" required></textarea></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><button name="submit" value="Submit Comment">post</button></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+<div id="commentsList">
+    <h4>Comments</h4>
+    <span class="text-warning">{{msg}}</span>
+    <ul >
+        <li class=" span6" ng-repeat="cmt in comments">
+            <blockquote>
+                   {{cmt.body}}
+                <small class="clearfix">— {{cmt.author}} ({{cmt.created}})</small>
+            </blockquote>
+        </li>
+    </ul>
+    </div>
+

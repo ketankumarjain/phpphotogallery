@@ -1,0 +1,15 @@
+<a href="#view4">&laquo; Back</a>
+
+<div class="page-header">
+    <h1>Photo Comments!<small><a class="btn btn-primary" href="">Logout</a></small></h1>
+</div>
+
+<div id="commentsList">
+    <h4>Comments</h4>
+    <strong class="text-warning">{{msg}}</strong>
+    <div class="span8 alert alert-info alert-dismissible" role="alert" ng-repeat="cmt in comments">
+        <button  ng-controller='deleteCtrl' ng-click="deleteComment(cmt.id)"  class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>{{cmt.author}} says:</strong>{{cmt.body}}.at{{cmt.created}}
+    </div>
+
+</div>
