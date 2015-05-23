@@ -19,7 +19,7 @@ include_once "D:/wamp/www/phpphotogallery/models/Interactor/CommentsDAO.php";
 
 
 class PhotoGraphDAO extends DAO {
-  //  protected $upload_dir="images";
+
     public $errors=array();
     public function __construct(DBGetway $db){
         $this->db=$db;
