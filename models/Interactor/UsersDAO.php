@@ -24,15 +24,11 @@ class UsersDAO extends DAO {
         $username = filter_var($user,FILTER_SANITIZE_STRIPPED);
         $password =filter_var($pass);
 
-        $result_object = $this->find_User($username, $password);
+        $result_object = $this->db->find_User($username, $password,$this->table_name);
         return $result_object;
     }
 
-    public   function find_User($username, $password)
-    {
-        $sql="select * from ".$this->table_name." where username='{$username}' AND password='{$password}' LIMIT 1";
-             return  $this->db->find_user_query($sql);
-    }
+
 
 }
 /*$user=new User();
