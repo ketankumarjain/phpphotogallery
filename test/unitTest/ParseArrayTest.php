@@ -1,4 +1,5 @@
 <?php
+use entity\Photograph;
 use entity\User;
 use utility\ParseArray;
 
