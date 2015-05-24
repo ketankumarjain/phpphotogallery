@@ -18,6 +18,7 @@ interface DBGetway {
     function update($object,$table_name);
     function find_user_query($sql,$table_name="");
     function find_comment_by_Photo_id($objet,$table);
+    public   function find_User($username, $password,$table_name);
     public  function removeComment_by_PhotoId($photo_id);
 
 }
