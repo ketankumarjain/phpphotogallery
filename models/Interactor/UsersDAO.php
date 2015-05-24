@@ -7,9 +7,9 @@
  */
 
 namespace Interactor;
-include_once("../Interactor/db/MySqlQueryEngine.php");
-include_once("../Interactor/DAO.php");
-include_once("../utility/ParseArray.php");
+include_once("D:/wamp/www/phpphotogallery/models/Interactor/db/MySqlQueryEngine.php");
+include_once("D:/wamp/www/phpphotogallery/models/Interactor/DAO.php");
+include_once("D:/wamp/www/phpphotogallery/models/utility/ParseArray.php");
 
 class UsersDAO extends DAO {
     /**
@@ -19,6 +19,7 @@ class UsersDAO extends DAO {
        $this->db=$db;
         $this->table_name="galleryusers";
     }
+
 
     public  function authenticate($user="", $pass="") {
         $username = filter_var($user,FILTER_SANITIZE_STRIPPED);
