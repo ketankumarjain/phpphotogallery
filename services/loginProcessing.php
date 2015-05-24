@@ -1,8 +1,11 @@
 <?php
+use Interactor\DBConnection;
+
 include_once("Session.php");
 include_once("../models/Interactor/db/MySqlQueryEngine.php");
 include_once("../models/Interactor/UsersDAO.php");
 include_once("../models/utility/CommanFunction.php");
+include_once("../models/Interactor/db/DBConnection.php");
 
 /**
  * Created by PhpStorm.
@@ -13,10 +16,11 @@ include_once("../models/utility/CommanFunction.php");
 header("Access-Control-Allow-Origin: *");
 $postData = file_get_contents("php://input");
 $request = json_decode($postData);
-$name = $request->user;
-$pass = $request->pass;
 
 $user=new \Interactor\UsersDAO(new \Interactor\MySqlQueryEngine());
+$name =mysqli_escape_string(DBConnection::getInstance()->getConnection(), $request->user);
+$pass = mysqli_escape_string(DBConnection::getInstance()->getConnection(),$request->pass);
+
 $found_user = $user->authenticate($name,$pass);
 if (isset($found_user->id)) {
     $session->login($found_user);
