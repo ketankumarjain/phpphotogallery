@@ -142,7 +142,7 @@ app.controller('deleteCtrl',function($scope,$http,$location){
         });
         request.success(function (response, status) {
             if (status == 204) {
-                alert("Wrong User");
+                alert("Bad User Credential");
             } else {
 
                 console.log(response)
