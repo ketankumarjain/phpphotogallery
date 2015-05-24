@@ -74,6 +74,13 @@ class MySqlQueryEngine implements DBGetway
 
     }
 
+    public   function find_User($username, $password,$table_name)
+    {
+        $sql="select * from ".$table_name." where username='{$username}' AND password='{$password}' LIMIT 1";
+        return  $this->db->find_user_query($sql);
+    }
+
+
     function countAll($table_name)
     {
         // TODO: Implement countAll() method.
