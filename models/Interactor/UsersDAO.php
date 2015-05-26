@@ -22,8 +22,8 @@ class UsersDAO extends DAO {
 
 
     public  function authenticate($user="", $pass="") {
-        $username = filter_var($user,FILTER_SANITIZE_STRIPPED);
-        $password =filter_var($pass);
+        $username = $user;
+        $password =$pass;
 
         $result_object = $this->db->find_User($username, $password,$this->table_name);
         return $result_object;
