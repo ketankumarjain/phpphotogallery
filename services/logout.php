@@ -12,4 +12,5 @@ header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0");
 
 $session->logout();
+log_action("LogOut","$name");
 ?>
