@@ -5,6 +5,8 @@
  * Date: 5/22/2015
  * Time: 3:40 PM
  */
+use entity\Comment;
+
 include_once"../models/Interactor/CommentsDAO.php";
 include_once"../models/Interactor/db/MySqlQueryEngine.php";
 include_once "../models/utility/CommanFunction.php";
