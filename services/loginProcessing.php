@@ -19,11 +19,13 @@ $request = json_decode($postData);
 
 $user=new \Interactor\UsersDAO(new \Interactor\MySqlQueryEngine());
 $name =mysqli_escape_string(DBConnection::getInstance()->getConnection(), $request->user);
-$pass = mysqli_escape_string(DBConnection::getInstance()->getConnection(),$request->pass);
+$pass =mysqli_escape_string(DBConnection::getInstance()->getConnection(),$request->pass);
 
 $found_user = $user->authenticate($name,$pass);
-if (isset($found_user->id)) {
+print_r($found_user);
+if (isset($found_user[0]->id)) {
     $session->login($found_user);
+    log_action("Login",$name);
     echo $name;
 } else {
     header("HTTP/1.0 204 Not content");
