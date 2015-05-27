@@ -5,8 +5,7 @@
  * Date: 4/27/2015
  * Time: 8:37 AM
  */
-
-namespace Interactor;
+namespace Interactor\db;
 include_once"D:/wamp/www/phpphotogallery/models/Interactor/DBGetway.php";
 include_once"D:/wamp/www/phpphotogallery/models/Interactor/db/DBConnection.php";
 
@@ -15,7 +14,7 @@ include_once"D:/wamp/www/phpphotogallery/models/utility/ParseArray.php";
 
 
 use Interactor\DBGetway;
-use User;
+use entity\User;
 use utility\ParseArray;
 
 class MySqlQueryEngine implements DBGetway
