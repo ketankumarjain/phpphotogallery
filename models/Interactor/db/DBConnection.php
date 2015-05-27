@@ -5,7 +5,7 @@
  * Date: 4/26/2015
  * Time: 11:47 AM
  */
-namespace Interactor;
+namespace Interactor\db;
 use DBConfig;
 include_once "D:/wamp/www/phpphotogallery/config/DBConfig.php";
 
