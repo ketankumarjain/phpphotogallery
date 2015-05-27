@@ -9,12 +9,7 @@
 namespace Interactor;
 
 use entity\Photograph;
-
-include_once"D:/wamp/www/phpphotogallery/config/UploadErrors.php";
-include_once"D:/wamp/www/phpphotogallery/models/entity/Photograph.php";
-include_once"D:/wamp/www/phpphotogallery/models/Interactor/DAO.php";
-include_once"D:/wamp/www/phpphotogallery/models/Interactor/db/MySqlQueryEngine.php";
-include_once "D:/wamp/www/phpphotogallery/models/Interactor/CommentsDAO.php";
+require_once dirname(__DIR__)."/../config/Auto_load.php";
 
 
 

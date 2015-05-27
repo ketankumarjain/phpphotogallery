@@ -7,7 +7,9 @@
  */
 
 namespace Interactor;
-include_once("D:/wamp/www/phpphotogallery/models/Interactor/DAO.php");
+require_once dirname(__DIR__)."/../config/Auto_load.php";
+
+
 
 class CommentsDAO extends DAO{
     public function __construct(DBGetway $db){
@@ -24,8 +26,5 @@ class CommentsDAO extends DAO{
 
     }
 }
-/*include_once("../Interactor/db/MySqlQueryEngine.php");
-$CommentsDAO=new CommentsDAO(new MySqlQueryEngine());
-print_r($CommentsDAO->get_all_comments_by(14));*/
 
 ?>

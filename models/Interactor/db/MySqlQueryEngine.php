@@ -6,11 +6,8 @@
  * Time: 8:37 AM
  */
 namespace Interactor\db;
-include_once"D:/wamp/www/phpphotogallery/models/Interactor/DBGetway.php";
-include_once"D:/wamp/www/phpphotogallery/models/Interactor/db/DBConnection.php";
+require_once dirname(__DIR__)."/../../config/Auto_load.php";
 
-include_once"D:/wamp/www/phpphotogallery/models/entity/User.php";
-include_once"D:/wamp/www/phpphotogallery/models/utility/ParseArray.php";
 
 
 use Interactor\DBGetway;

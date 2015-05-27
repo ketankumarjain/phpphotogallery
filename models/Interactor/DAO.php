@@ -10,7 +10,7 @@ namespace Interactor;
 
 //DAO -database access object
 use utility\ParseArray;
-include_once "D:/wamp/www/phpphotogallery/models/utility/ParseArray.php";
+require_once dirname(__DIR__)."/../config/Auto_load.php";
 abstract class DAO {
     protected  $table_name="";
     protected  $db;

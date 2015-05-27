@@ -7,7 +7,8 @@
  */
 namespace Interactor\db;
 use DBConfig;
-include_once "D:/wamp/www/phpphotogallery/config/DBConfig.php";
+
+require_once dirname(__DIR__)."/../../config/Auto_load.php";
 
 class DBConnection {
     private $connection;

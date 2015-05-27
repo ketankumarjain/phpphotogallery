@@ -12,8 +12,8 @@ namespace Interactor\db;
 use entity\User;
 use Interactor\DBGetway;
 
-include_once("D:/wamp/www/phpphotogallery/models/entity/User.php");
-include_once("D:/wamp/www/phpphotogallery/models/Interactor/DBGetway.php");
+require_once dirname(__DIR__)."/../../config/Auto_load.php";
+
 class InMomoryDatabase implements  DBGetway {
 
 

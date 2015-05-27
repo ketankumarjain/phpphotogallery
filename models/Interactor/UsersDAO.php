@@ -7,9 +7,8 @@
  */
 
 namespace Interactor;
-include_once("D:/wamp/www/phpphotogallery/models/Interactor/db/MySqlQueryEngine.php");
-include_once("D:/wamp/www/phpphotogallery/models/Interactor/DAO.php");
-include_once("D:/wamp/www/phpphotogallery/models/utility/ParseArray.php");
+require_once dirname(__DIR__)."/../config/Auto_load.php";
+
 
 class UsersDAO extends DAO {
     /**
