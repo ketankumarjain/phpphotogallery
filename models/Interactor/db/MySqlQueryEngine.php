@@ -15,7 +15,6 @@ include_once"D:/wamp/www/phpphotogallery/models/utility/ParseArray.php";
 
 use Interactor\DBGetway;
 use entity\User;
-use utility\ParseArray;
 
 class MySqlQueryEngine implements DBGetway
 {
