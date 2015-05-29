@@ -40,6 +40,12 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("rock",$this->userlist[0]->username);
 
     }
+    public function testfindbyuser(){
+        //when
+        $this->userlist=$this->mysqlEngine->find_User("rock","k123","galleryusers");
+        //then
+        $this->assertEquals("rock",$this->userlist[0]->username);
+    }
     /*
      *
      * @after*/
