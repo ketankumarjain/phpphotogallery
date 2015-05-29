@@ -5,23 +5,24 @@
  * Date: 4/26/2015
  * Time: 11:28 AM
  */
-include_once "../../models/Interactor/UsersDAO.php";
-include_once "../../models/Interactor/PhotoGraphDAO.php";
 
-include_once "../../models/Interactor/db/InMomoryDatabase.php";
+require_once dirname(__DIR__)."/../config/Auto_load.php";
 
+use entity\User;
 use Interactor\db\InMomoryDatabase;
 use Interactor\UsersDAO;
 
 class UsersDAOTest extends PHPUnit_Framework_TestCase {
-/*
+
+    /**
  *  @test
  */
-    public function testFindAll(){
+    public function FindAll(){
         //given
         $users=new \Interactor\UsersDAO(new InMomoryDatabase());
         //when
         $userlist=$users->getAll();
+        print_r($userlist);
         //then
        $this->assertEquals(1,count($userlist));
     }
@@ -30,17 +31,28 @@ class UsersDAOTest extends PHPUnit_Framework_TestCase {
         $users=new UsersDAO(new InMomoryDatabase());
         //when
         $userlist=$users->get_by_Id(1);
+        print_r($userlist);
         //then
         $this->assertEquals(1,$userlist->id);
     }
-/*    public function testUserAuthenticate(){
+    public function testUserAuthenticate(){
         //given
-        $users=new UsersDAO(new MySqlQueryEngine());
+        $users=new UsersDAO(new InMomoryDatabase());
         //when
-        $actualuser=$users::authenticate("kw","kw123");
-            print_r($actualuser);
+        $actualuser=$users->authenticate("rock","k123");
         //then
-        $this->assertEquals("rose",$actualuser->getLastName());
-    }*/
+        $this->assertEquals("jain",$actualuser->getLastName());
+    }
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage No Content Found
+     */
+    public function testUserAuthenticateWhenWrong(){
+        //given
+        $users=new UsersDAO(new InMomoryDatabase());
+        //when
+        $actualuser=$users->authenticate("rocks","k1s23");
+
+    }
 
 }

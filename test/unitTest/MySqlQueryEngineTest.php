@@ -6,7 +6,7 @@
  * Time: 9:05 AM
  */
 use entity\User;
-use Interactor\MySqlQueryEngine;
+use Interactor\db\MySqlQueryEngine;
 use utility\ParseArray;
 
 include_once("D:/wamp/www/phpphotogallery/models/entity/User.php");

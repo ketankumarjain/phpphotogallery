@@ -9,9 +9,8 @@ use utility\ParseArray;
  * Date: 4/28/2015
  * Time: 10:45 AM
  */
-include_once("D:\\wamp\\www\\phpphotogallery\\models\\entity\\User.php");
-include_once("D:\\wamp\\www\\phpphotogallery\\models\\utility\\ParseArray.php");
-include_once"D:\\wamp\\www\\phpphotogallery\\models\\entity\\Photograph.php";
+require_once dirname(__DIR__)."/../config/Auto_load.php";
+
 
 class ParseArrayTest extends PHPUnit_Framework_TestCase {
 
