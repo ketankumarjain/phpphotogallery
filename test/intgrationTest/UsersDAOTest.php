@@ -9,14 +9,11 @@
 namespace intgrationTest;
 
 use entity\User;
-use Interactor\MySqlQueryEngine;
+use Interactor\db\MySqlQueryEngine;
 use Interactor\UsersDAO;
 
-include_once "../../models/Interactor/UsersDAO.php";
-include_once "../../models/Interactor/PhotoGraphDAO.php";
-include_once"../../models/entity/User.php";
-include_once "../../models/Interactor/db/MySqlQueryEngine.php";
-include_once"../../models/utility/ParseArray.php";
+require_once dirname(__DIR__)."/../config/Auto_load.php";
+
 
 class UsersDAOTest extends \PHPUnit_Framework_TestCase {
 
