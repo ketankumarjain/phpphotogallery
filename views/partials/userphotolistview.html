@@ -1,6 +1,6 @@
 <div class="page-header">
     <h1>PhotoGallery!<small><a class="btn btn-link btn-block" href="">Logout</a></small></h1>
-    <form action="http://localhost/photo_gallery/services/photo_upload.php" enctype="multipart/form-data" method="POST">
+    <form action="http://localhost/phpphotogallery/services/photo_upload.php" enctype="multipart/form-data" method="POST">
         <p><input type="file" name="fileToUpload" required /></p>
         <label>Caption:</label><input   type="text" name="caption" value="" required title="Caption" maxlength="30"/>
         <input type="submit" name="submit" value="Upload" />
@@ -9,7 +9,7 @@
 
 
 <div class="container">
-    <table class="table-striped table-bordered">
+    <table class="table-striped">
         <thead class="success">
         <tr class="info">
             <th>Image</th>
