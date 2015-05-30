@@ -55,7 +55,7 @@ class UsersDAOTest extends \PHPUnit_Framework_TestCase {
         //assert
 
         $db=new MySqlQueryEngine();
-        $db->deleteall("galleryusers");
+        $db->deleteAll("galleryusers");
         $this->user=new User();
         //defult user
         $this->user->setFirstName("ketan");
