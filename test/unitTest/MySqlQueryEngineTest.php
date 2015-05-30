@@ -27,6 +27,7 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         $this->user->setLastName("kie");
         $this->user->setPassword("jpeg");
         $this->user->setUsername("rock");
+
         //when
         $userObject= ParseArray::doParse($this->user);
         $this->mysqlEngine->create($userObject,"galleryusers");
@@ -46,14 +47,21 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         $this->userlist=$this->mysqlEngine->find_All("galleryusers");
         $actual=count($this->userlist);
         //then
-        $this->assertEquals(1,$actual);
+        $this->assertEquals(2,$actual);
 
     }
     public function testfindbyuser(){
         //when
-        $this->userlist=$this->mysqlEngine->find_User("rock","k123","galleryusers");
+        $this->userlist=$this->mysqlEngine->find_User("rock","jpeg","galleryusers");
         //then
         $this->assertEquals("rock",$this->userlist[0]->username);
+    }
+    public function testDeleteEntity(){
+        $this->user->id=2;
+        $userObject= ParseArray::doParse($this->user);
+        $actual=$this->mysqlEngine->delete($userObject,"galleryusers");
+        $this->assertEquals(1,$actual);
+
     }
 
     /*
@@ -61,14 +69,14 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
      * @after*/
     public function tearDown(){
         //assert
-        $this->mysqlEngine->deleteall("galleryusers");
-       /* $this->user=new User();
-        //defult user
-        $this->user->setFirstName("ketan");
-        $this->user->setLastName("jain");
-        $this->user->setPassword("k123");
-        $this->user->setUsername("rock");
-        $userObject= ParseArray::doParse($this->user);
-        $this->mysqlEngine->create($userObject,"galleryusers");*/
+        $this->mysqlEngine->deleteAll("galleryusers");
+         $this->user=new User();
+         //defult user
+         $this->user->setFirstName("ketan");
+         $this->user->setLastName("jain");
+         $this->user->setPassword("k123");
+         $this->user->setUsername("rock");
+         $userObject= ParseArray::doParse($this->user);
+         $this->mysqlEngine->create($userObject,"galleryusers");
     }
 }
