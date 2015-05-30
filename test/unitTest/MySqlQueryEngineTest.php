@@ -33,11 +33,20 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
 
     }
     public function testFindByID(){
-
         //when
         $this->userlist=$this->mysqlEngine->find_by_id(1,"galleryusers");
         //then
+
         $this->assertEquals("rock",$this->userlist[0]->username);
+
+
+    }
+    public function testFindAll(){
+        //when
+        $this->userlist=$this->mysqlEngine->find_All("galleryusers");
+        $actual=count($this->userlist);
+        //then
+        $this->assertEquals(1,$actual);
 
     }
     public function testfindbyuser(){
@@ -46,19 +55,20 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         //then
         $this->assertEquals("rock",$this->userlist[0]->username);
     }
+
     /*
      *
      * @after*/
     public function tearDown(){
         //assert
         $this->mysqlEngine->deleteall("galleryusers");
-        $this->user=new User();
+       /* $this->user=new User();
         //defult user
         $this->user->setFirstName("ketan");
         $this->user->setLastName("jain");
         $this->user->setPassword("k123");
         $this->user->setUsername("rock");
         $userObject= ParseArray::doParse($this->user);
-        $this->mysqlEngine->create($userObject,"galleryusers");
+        $this->mysqlEngine->create($userObject,"galleryusers");*/
     }
 }
