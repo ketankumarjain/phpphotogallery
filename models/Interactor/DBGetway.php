@@ -10,15 +10,13 @@ namespace Interactor;
 
 
 interface DBGetway {
-    function find_by_id($idNumber,$table_name);
+
     function find_All($table_name);
-    function countAll($table_name);
-    function create($objectAss_Array,$table_name);
+    function create($objectAss_In_Array,$table_name);
     function delete($object,$table_name);
     function update($object,$table_name);
-    function find_user_query($sql,$table_name="");
-    function find_comment_by_Photo_id($objet,$table);
-    public   function find_User($username, $password,$table_name);
-    public  function removeComment_by_PhotoId($photo_id);
+    function findBySingleValue($key,$value,$table_name);
+    public function find_by_Values($key1,$value1,$key2,$value2,$table_name);
+    public function removeBySingleValue($key,$value,$table_name);
 
 }

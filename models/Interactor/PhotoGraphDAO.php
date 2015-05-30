@@ -12,7 +12,6 @@ use entity\Photograph;
 require_once dirname(__DIR__)."/../config/Auto_load.php";
 
 
-
 class PhotoGraphDAO extends DAO {
 
     public $errors=array();
@@ -22,32 +21,28 @@ class PhotoGraphDAO extends DAO {
     }
 
     public  function destroy($photograph) {
-        // First remove the database entry
-        if(self::remove($photograph)) {
+        if($this->remove($photograph)) {
+            //code smell
 
-            // then remove the file
-            // Note that even though the database entry is gone, this object
-            // is still around (which lets us use $this->image_path()).
-            $target_path = "D:/wamp/www/phpphotogallery/".$photograph->path;
-            return unlink($target_path) ? true : false;
+            $String= dirname(__DIR__);
+            $dir=explode("\\",$String);
+            $root_Dir= $dir[0].DIRECTORY_SEPARATOR.$dir[1].DIRECTORY_SEPARATOR.$dir[2].DIRECTORY_SEPARATOR.$dir[3];
+            $target_path = $root_Dir."/".$photograph->path;
+            if(unlink($target_path)) {
+                true;
+            }
         } else {
-            // database delete failed
             return false;
         }
     }
 
     public   function save($Photograph) {
-        // A new record won't have an id yet.
-
         if($Photograph->getId()) {
-            // Really just to update the caption
             $this->update($Photograph);
         } else {
-
                 $this->Insert($Photograph);
         }
     }
-
     public  function getPhotographs(){
         $all=$this->getAll();
         $len=count($all);
@@ -67,10 +62,7 @@ class PhotoGraphDAO extends DAO {
     }
     public  function getComments($Photograph){
        $Comment=new CommentsDAO($this->db);
-        return  $Comment->get_all_comments_by($Photograph->id);
+        return  $Comment->getComments_by($Photograph->id);
     }
 
 }
-
-
-?>

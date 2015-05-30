@@ -8,24 +8,30 @@
 
 namespace Interactor;
 
-//DAO -database access object
+/***
+ * DAO -database access object this interact with database
+ */
+use Exception;
 use utility\ParseArray;
 require_once dirname(__DIR__)."/../config/Auto_load.php";
 abstract class DAO {
     protected  $table_name="";
     protected  $db;
-    function __construct(DBGetway $db)
-    {
-        $this->db=$db;
 
-    }
     public  function getAll() {
-        return $this->db->find_All($this->table_name);
+        $result= $this->db->find_All($this->table_name);
+        if($result==null)
+            throw new Exception("No Content Found");
+
+        return $result;
     }
-    public   function get_by_Id($id=0) {
-        return $this->db->find_by_id($id,$this->table_name);
+    public   function get_by_Id($id) {
+        $result= $this->db->findBySingleValue("id",$id,$this->table_name);
+        if($result==null)
+            throw new Exception("No Content Found");
+        return $result;
     }
-   public  function Insert( $obj){
+    public  function Insert( $obj){
         $objectarray=ParseArray::doParse($obj);
         return $this->db->create($objectarray,$this->table_name);
     }
@@ -38,5 +44,4 @@ abstract class DAO {
         return $this->db->delete($userobjaaray,$this->table_name);
     }
 }
-
 ?>
