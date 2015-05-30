@@ -13,12 +13,6 @@ require_once dirname(__DIR__)."/../../config/Auto_load.php";
 class DBConnection {
     private $connection;
     private static $_instance;
-    //The single instance
-    /*
-     Get an instance of the Database
-     @return Instance
-     */
-
 
     public static function getInstance() {
         if(!isset(self::$_instance)){ // If no instance then make one
@@ -26,7 +20,6 @@ class DBConnection {
         }
         return self::$_instance;
     }
-
     // Constructor
     private function __construct() {
 
@@ -38,10 +31,8 @@ class DBConnection {
                 E_USER_ERROR);
         }
     }
-
     // Magic method clone is empty to prevent duplication of connection
     private function __clone() { }
-
     // Get mysqli connection
     public function getConnection() {
         return $this->connection;
