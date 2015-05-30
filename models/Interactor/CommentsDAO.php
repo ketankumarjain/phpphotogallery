@@ -16,12 +16,13 @@ class CommentsDAO extends DAO{
         $this->db=$db;
         $this->table_name="comments";
     }
-    public  function get_all_comments_by($photoId){
-       $result=$this->db->find_comment_by_Photo_id($photoId,$this->table_name);
+    public  function getComments_by($photoId){
+
+       $result=$this->db->findBySingleValue("photograph_id",$photoId,$this->table_name);
         return $result;
     }
     public function remove_comments($photoId){
-        $result=$this->db->removeComment_by_PhotoId($photoId);
+        $result=$this->db->removeBySingleValue("photograph_id",$photoId,$this->table_name);
         return $result;
 
     }
