@@ -37,10 +37,7 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         //when
         $this->userlist=$this->mysqlEngine->find_by_id(1,"galleryusers");
         //then
-
         $this->assertEquals("rock",$this->userlist[0]->username);
-
-
     }
     public function testFindAll(){
         //when
@@ -50,9 +47,10 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(2,$actual);
 
     }
-    public function testfindbyuser(){
+    public function testfindby2keyValuePair(){
         //when
-        $this->userlist=$this->mysqlEngine->find_User("rock","jpeg","galleryusers");
+        $this->mysqlEngine=new MySqlQueryEngine();
+        $this->userlist=$this->mysqlEngine->find_by_Values("username","rock","password","jpeg","galleryusers");
         //then
         $this->assertEquals("rock",$this->userlist[0]->username);
     }
@@ -63,6 +61,14 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(1,$actual);
 
     }
+    public function testSingleValue(){
+        //when
+        $this->userlist=$this->mysqlEngine->singleValue("id",1,"galleryusers");
+        //then
+        $this->assertEquals("rock",$this->userlist[0]->username);
+
+    }
+
 
     /*
      *
