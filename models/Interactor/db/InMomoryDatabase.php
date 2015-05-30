@@ -11,6 +11,7 @@ namespace Interactor\db;
 
 use entity\User;
 use Interactor\DBGetway;
+use Prophecy\Exception\Exception;
 
 require_once dirname(__DIR__)."/../../config/Auto_load.php";
 
@@ -24,11 +25,10 @@ class InMomoryDatabase implements  DBGetway {
         //defult user
         $user->setId(1);
         $user->setFirstName("ketan");
-        $user->setFirstName("ketan");
         $user->setLastName("jain");
         $user->setPassword("k123");
         $user->setUsername("rock");
-        array_push($this->result,$user);
+        $this->result[$user->getId()]=$user;
     }
 
     function find_by_id($idNumber, $table_name)
@@ -40,23 +40,20 @@ class InMomoryDatabase implements  DBGetway {
             }
             return $item;
         }
-        // TODO: Implement find_by_id() method.
     }
 
     function find_All($table_name="")
     {
         return $this->result;
-        // TODO: Implement find_All() method.
     }
 
     function countAll($table_name)
     {
-        // TODO: Implement countAll() method.
+                count($this->result);
     }
 
-    function create($objectAss_Array, $table_name)
+    function create( $objectAss_In_Array, $table_name='')
     {
-        // TODO: Implement create() method.
     }
 
     function delete($object, $table_name)
@@ -81,12 +78,32 @@ class InMomoryDatabase implements  DBGetway {
 
     public function removeComment_by_PhotoId($photo_id)
     {
-        // TODO: Implement removeComment_by_PhotoId() method.
+
     }
 
     public function find_User($username, $password, $table_name)
     {
-        // TODO: Implement find_User() method.
+        foreach($this->result as $records){
+            if($records->username==$username && $records->password==$password)
+                return $records;
+        }
+
+    }
+
+    function findBySingleValue($key, $value, $table_name)
+    {
+        // TODO: Implement findBySingleValue() method.
+    }
+
+    public function find_by_Values($key1, $value1, $key2, $value2, $table_name)
+    {
+        // TODO: Implement find_by_Values() method.
+    }
+
+    public function removeBySingleValue($key, $value, $table_name)
+    {
+        // TODO: Implement removeBySingleValue() method.
     }
 }
+
 ?>

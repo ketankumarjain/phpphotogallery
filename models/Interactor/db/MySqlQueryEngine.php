@@ -28,61 +28,42 @@ class MySqlQueryEngine implements DBGetway
         $objects= $this->getResult($query);
         return $objects;
     }
-
     public function find_All($table_name)
     {
         $query = "SELECT * FROM " . $table_name;
         return $this->getResult($query);
     }
-
-    public   function find_User($username, $password,$table_name)
+    public function findBySingleValue($key,$value,$table_name){
+        $query = "SELECT * FROM " . $table_name . " WHERE {$key}={$value}";
+        $objects= $this->getResult($query);
+        return $objects;
+    }
+    public function find_by_Values($key1, $value1, $key2, $value2, $table_name)
     {
-        $query="select * from ".$table_name." where username='{$username}' AND password='{$password}' LIMIT 1";
+        $query="select * from ".$table_name." where {$key1}='{$value1}' AND {$key2}='{$value2}' LIMIT 1";
         return $this->getResult($query);
     }
 
-    function find_comment_by_Photo_id($photo_id, $table_name)
-    {
-        $sql = "SELECT * FROM " .$table_name;
-        $sql .= " WHERE photograph_id=" .$photo_id;
-        $sql .= " ORDER BY created ASC";
-        return $this->getResult($sql);
-    }
-
-    function countAll($table_name)
-    {
-            throw new \Exception("Not Implemented");
-    }
-
-    function create($objectArray, $table_name)
+    public function create($objectInArray, $table_name)
     {
 
         $sql = "INSERT INTO ".$table_name." (";
-        $sql .= join(", ", array_keys($objectArray));
+        $sql .= join(", ", array_keys($objectInArray));
         $sql .= ") VALUES ('";
-        $sql .= join("', '", array_values($objectArray));
+        $sql .= join("', '", array_values($objectInArray));
         $sql .= "')";
         return $this->query($sql);
     }
-
-    function delete($object, $table_name)
+    public function delete($objectInArray, $table_name)
     {
+
         $sql = "DELETE FROM ".$table_name;
-        $sql .= " WHERE id=".$object["id"];
+        $sql .= " WHERE id=".$objectInArray["id"];
         $sql .= " LIMIT 1";
-        $this->query($sql);
-        return ($this->affected_rows($this->db) == 1) ? true : false;
+        return ($this->query($sql)) ? 1 : 0;
 
     }
-
-    public function removeComment_by_PhotoId($photo_id)
-    {
-        $sql = "DELETE FROM comments";
-        $sql .= " WHERE photograph_id=".$photo_id;
-        $this->query($sql);
-        return ($this->affected_rows($this->db) >= 1) ? true : false;
-    }
-    function update($attributes, $table_name)
+    public function update($attributes, $table_name)
     {
         $attribute_pairs = array();
         foreach($attributes as $key => $value) {
@@ -91,9 +72,10 @@ class MySqlQueryEngine implements DBGetway
         $sql = "UPDATE ".$table_name." SET ";
         $sql .= join(", ", $attribute_pairs);
         $sql .= " WHERE id=". $attributes["id"];
-        $this->query($sql);
-        return ($this->affected_rows($this->db) == 1) ? true : false;
+        return ($this->query($sql)) ? true : false;
     }
+
+    //mysql specific query
     public function fetch_array($result_set)
     {
         return mysqli_fetch_assoc($result_set);
@@ -110,16 +92,15 @@ class MySqlQueryEngine implements DBGetway
     {
         return mysqli_insert_id(DBConnection::getInstance()->getConnection());
     }
-    public  function deleteall($tablename){
+    public  function deleteAll($tablename){
         $this->query("TRUNCATE TABLE ".$tablename);
     }
 
     //private
-
     private function query($sql)
     {
         $this->last_query = $sql;
-        $result = mysqli_query($this->db->getConnection(),$sql);
+        $result =$this->db->getConnection()->query($sql);
         $this->confirm_query($result);
         return $result;
     }
@@ -132,11 +113,8 @@ class MySqlQueryEngine implements DBGetway
     private function getResult($query)
     {
         if ($result = $this->db->getConnection()->query($query)) {
-           $objects= $this->iterate($result);
-
-            return $objects;
-
-        } else {
+            return $this->iterate($result);
+        } else {                                //code smell
             $this->confirm_query($result);
         }
     }
@@ -146,6 +124,12 @@ class MySqlQueryEngine implements DBGetway
         while ($object = $this->getObjects($result))
             array_push($objects, $object);
         return $objects;
+    }
+    public function removeBySingleValue($key, $value, $table_name)
+    {
+        $sql = "DELETE FROM{$table_name}";
+        $sql .= " WHERE $key=".$value;
+        return $this->query($sql);
     }
 }
 
