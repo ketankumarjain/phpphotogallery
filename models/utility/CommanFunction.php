@@ -5,13 +5,6 @@
  * Date: 4/26/2015
  * Time: 11:17 AM
  */
-function strip_zeros_from_date( $marked_string="" ) {
-    // first remove the marked zeros
-    $no_zeros = str_replace('*0', '', $marked_string);
-    // then remove any remaining marks
-    $cleaned_string = str_replace('*', '', $no_zeros);
-    return $cleaned_string;
-}
 
 function redirect_to( $location = NULL ) {
     if ($location != NULL) {
@@ -29,10 +22,11 @@ function output_message($message="") {
 }
 
 function log_action($action, $message="") {
-    $logfile =""; //SITE_ROOT.DS.'logs'.DS.'log.txt';
+    $logfile ="D:\\wamp\\www\\phpphotogallery\\log.ini"; //SITE_ROOT.DS.'logs'.DS.'log.txt';
     $new = file_exists($logfile) ? false : true;
     if($handle = fopen($logfile, 'a')) { // append
-        $timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+        date_default_timezone_set("Asia/Kolkata");
+        $timestamp = date('d-m-Y H:i:s', time());
         $content = "{$timestamp} | {$action}: {$message}\n";
         fwrite($handle, $content);
         fclose($handle);
@@ -40,6 +34,22 @@ function log_action($action, $message="") {
             chmod($logfile, 0755); }
     } else {
         echo "Could not open log file for writing.";
+    }
+    function __autoload($class_name){
+        $msg="";
+        $path1 =dirname(__FILE__)."/config/{$class_name}.php";
+        $path2 =dirname(__FILE__)."/models/{$class_name}.php";
+        $path3=dirname(__FILE__)."/models/{$class_name}.php";
+        $path4=dirname(__FILE__)."/models/{$class_name}.php";
+        $paths=array($path1,$path2,$path3,$path4);
+        foreach($paths as $path){
+            if(file_exists($path)) {
+                require_once($path);
+            }else{
+                $msg="Error";
+            }
+        }
+        echo $msg;
     }
 }
 ?>
