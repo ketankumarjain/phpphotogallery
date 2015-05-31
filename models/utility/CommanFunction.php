@@ -22,7 +22,7 @@ function output_message($message="") {
 }
 
 function log_action($action, $message="") {
-    $logfile ="D:\\wamp\\www\\phpphotogallery\\log.ini"; //SITE_ROOT.DS.'logs'.DS.'log.txt';
+    $logfile =dirname(__DIR__)."\\log.ini"; //SITE_ROOT.DS.'logs'.DS.'log.txt';
     $new = file_exists($logfile) ? false : true;
     if($handle = fopen($logfile, 'a')) { // append
         date_default_timezone_set("Asia/Kolkata");
