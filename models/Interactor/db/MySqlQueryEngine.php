@@ -44,34 +44,34 @@ class MySqlQueryEngine implements DBGetway
         return $this->getResult($query);
     }
 
-    public function create($objectInArray, $table_name)
+    public function create($associativeArray, $table_name)
     {
 
         $sql = "INSERT INTO ".$table_name." (";
-        $sql .= join(", ", array_keys($objectInArray));
+        $sql .= join(", ", array_keys($associativeArray));
         $sql .= ") VALUES ('";
-        $sql .= join("', '", array_values($objectInArray));
+        $sql .= join("', '", array_values($associativeArray));
         $sql .= "')";
         return $this->query($sql);
     }
-    public function delete($objectInArray, $table_name)
+    public function delete($associativeArray, $table_name)
     {
 
         $sql = "DELETE FROM ".$table_name;
-        $sql .= " WHERE id=".$objectInArray["id"];
+        $sql .= " WHERE id=".$associativeArray["id"];
         $sql .= " LIMIT 1";
         return ($this->query($sql)) ? 1 : 0;
 
     }
-    public function update($attributes, $table_name)
+    public function update($associativeArray, $table_name)
     {
         $attribute_pairs = array();
-        foreach($attributes as $key => $value) {
+        foreach($associativeArray as $key => $value) {
             $attribute_pairs[] = "{$key}='{$value}'";
         }
         $sql = "UPDATE ".$table_name." SET ";
         $sql .= join(", ", $attribute_pairs);
-        $sql .= " WHERE id=". $attributes["id"];
+        $sql .= " WHERE id=". $associativeArray["id"];
         return ($this->query($sql)) ? true : false;
     }
 
@@ -115,7 +115,7 @@ class MySqlQueryEngine implements DBGetway
         if ($result = $this->executeQuery($query)) {
             return $this->iterate($result);
         } else {                                //code smell
-            $this->confirm_query($result);
+            return $this->confirm_query($result);
         }
     }
     private function iterate($result)
@@ -131,7 +131,6 @@ class MySqlQueryEngine implements DBGetway
         $sql .= " WHERE $key=".$value;
         return $this->query($sql);
     }
-
     /**
      * @param $query
      * @return bool|\mysqli_result

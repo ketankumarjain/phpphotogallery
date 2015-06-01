@@ -32,16 +32,25 @@ abstract class DAO {
         return $result;
     }
     public  function Insert( $obj){
-        $objectarray=ParseArray::doParse($obj);
-        return $this->db->create($objectarray,$this->table_name);
+        $ass_array= $this->getAss_Array($obj);
+        return $this->db->create($ass_array,$this->table_name);
     }
     public  function update( $obj){
-        $userobjaaray=ParseArray::doParse($obj);
-        return $this->db->update($userobjaaray,$this->table_name);
+        $ass_array= $this->getAss_Array($obj);
+        return $this->db->update($ass_array,$this->table_name);
     }
     public  function remove($obj){
-        $userobjaaray=ParseArray::doParse($obj);
-        return $this->db->delete($userobjaaray,$this->table_name);
+        $ass_array= $this->getAss_Array($obj);
+        return $this->db->delete($ass_array,$this->table_name);
+    }
+
+    /**
+     * @param $obj
+     * @return array
+     */
+    private function getAss_Array($obj)
+    {
+        return ParseArray::doParse($obj);
     }
 }
 ?>
