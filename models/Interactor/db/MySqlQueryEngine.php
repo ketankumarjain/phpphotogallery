@@ -115,7 +115,7 @@ class MySqlQueryEngine implements DBGetway
         if ($result = $this->executeQuery($query)) {
             return $this->iterate($result);
         } else {                                //code smell
-            return $this->confirm_query($result);
+             $this->confirm_query($result);
         }
     }
     private function iterate($result)
