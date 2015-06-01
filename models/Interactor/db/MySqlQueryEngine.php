@@ -100,7 +100,7 @@ class MySqlQueryEngine implements DBGetway
     private function query($sql)
     {
         $this->last_query = $sql;
-        $result =$this->db->getConnection()->query($sql);
+        $result =$this->executeQuery($sql);
         $this->confirm_query($result);
         return $result;
     }
@@ -112,7 +112,7 @@ class MySqlQueryEngine implements DBGetway
     }
     private function getResult($query)
     {
-        if ($result = $this->db->getConnection()->query($query)) {
+        if ($result = $this->executeQuery($query)) {
             return $this->iterate($result);
         } else {                                //code smell
             $this->confirm_query($result);
@@ -130,6 +130,15 @@ class MySqlQueryEngine implements DBGetway
         $sql = "DELETE FROM{$table_name}";
         $sql .= " WHERE $key=".$value;
         return $this->query($sql);
+    }
+
+    /**
+     * @param $query
+     * @return bool|\mysqli_result
+     */
+    private function executeQuery($query)
+    {
+        return $this->db->getConnection()->query($query);
     }
 }
 
