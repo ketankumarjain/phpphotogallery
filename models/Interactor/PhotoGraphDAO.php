@@ -14,7 +14,6 @@ require_once dirname(__DIR__)."/../config/Auto_load.php";
 
 class PhotoGraphDAO extends DAO {
 
-    public $errors=array();
     const PHOTOGRAPHSTABLE = "photographs";
 
     public function __construct(DBGetway $db){
@@ -22,9 +21,8 @@ class PhotoGraphDAO extends DAO {
         $this->table_name= self::PHOTOGRAPHSTABLE;
     }
 
-    public  function destroy($photograph) {
+    public  function destroy($photograph) {            //code smell here....
         if($this->remove($photograph)) {
-            //code smell
             $String= dirname(__DIR__);
             $dir=explode("\\",$String);
             $root_Dir= $dir[0].DIRECTORY_SEPARATOR.$dir[1].DIRECTORY_SEPARATOR.$dir[2].DIRECTORY_SEPARATOR.$dir[3];
@@ -46,20 +44,19 @@ class PhotoGraphDAO extends DAO {
     }
     public  function getPhotographs(){
         $all=$this->getAll();
-        $len=count($all);
-        $photograpList=array();
-        for($index=0;$index<$len;$index++){
+        $photographs=array();
+        for($index=0;$index<count($all);$index++){
             $std=$all[$index];
-            $photograp=new Photograph();
-            $photograp->setId($std->id);
-            $photograp->setFilename($std->filename);
-            $photograp->setPath($std->path);
-            $photograp->setSize($std->size);
-            $photograp->setType($std->type);
-            $photograp->setCaption($std->caption);
-            $photograpList[$index]=$photograp;
+            $photograph=new Photograph();
+            $photograph->setId($std->id);
+            $photograph->setFilename($std->filename);
+            $photograph->setPath($std->path);
+            $photograph->setSize($std->size);
+            $photograph->setType($std->type);
+            $photograph->setCaption($std->caption);
+            $photographs[$index]=$photograph;
         }
-            return $photograpList;
+            return $photographs;
     }
     public  function getComments($Photograph){
        $Comment=new CommentsDAO($this->db);
