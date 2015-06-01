@@ -63,7 +63,7 @@ class MySqlQueryEngineTest extends PHPUnit_Framework_TestCase {
     }
     public function testSingleValue(){
         //when
-        $this->userlist=$this->mysqlEngine->singleValue("id",1,"galleryusers");
+        $this->userlist=$this->mysqlEngine->findBySingleValue("id",1,"galleryusers");
         //then
         $this->assertEquals("rock",$this->userlist[0]->username);
 
