@@ -15,15 +15,16 @@ require_once dirname(__DIR__)."/../config/Auto_load.php";
 class PhotoGraphDAO extends DAO {
 
     public $errors=array();
+    const PHOTOGRAPHSTABLE = "photographs";
+
     public function __construct(DBGetway $db){
         $this->db=$db;
-        $this->table_name="photographs";
+        $this->table_name= self::PHOTOGRAPHSTABLE;
     }
 
     public  function destroy($photograph) {
         if($this->remove($photograph)) {
             //code smell
-
             $String= dirname(__DIR__);
             $dir=explode("\\",$String);
             $root_Dir= $dir[0].DIRECTORY_SEPARATOR.$dir[1].DIRECTORY_SEPARATOR.$dir[2].DIRECTORY_SEPARATOR.$dir[3];
