@@ -1,4 +1,5 @@
 var app = angular.module('myApp', ['ngRoute']);
+
 app.config(['$routeProvider',function($routeProvider){
     $routeProvider
         .when('/view1', {
@@ -22,37 +23,28 @@ app.config(['$routeProvider',function($routeProvider){
             templateUrl: 'views/partials/commentsview.html'
         })
         .otherwise({redirectTo: '/view1'});
-
-
 }]);
-app.controller('PhotograpCtrl', function ($scope, $http) {
-    $http.get("http://localhost/phpphotogallery/services/PhotoList.php")
-        .success(function (response) {
+app.controller('PhotograpCtrl', function ($scope,photoService) {
+       photoService.allPhotos().success(function (response) {
             if(angular.isArray(response.records)) {
                 $scope.Photos = response.records;
-                console.log(response);
+            }else {
+                $scope.NoContentMesseage=response;
             }
-        })
-        .error(function (error) {
-            console.log(error)
+        }).error(function (error) {
+            console.log("Something Went Wrong in serverside"+error)
         });
 });
-app.controller('PhotoCommentCtrl', function ($scope, $http,$routeParams) {
-    $scope.par=$routeParams.id;
-    $http.get("http://localhost/photo_gallery/services/PhotoService.php?id="+$routeParams.id)
-        .success(function (response) {
+app.controller('PhotoCommentCtrl', function ($scope, photoService,$routeParams) {
+         photoService.PhotoComment($routeParams.id).success(function (response) {
             var comments;
             $scope.photo = response.record;
             comments=response.comments;
-            comments.shift();
             if(comments.length!=0) {
                 $scope.comments = comments;
-
             }else{
                 $scope.msg="No Comments yet";
-
             }
-
         })
         .error(function (error) {
             console.log(error)
@@ -62,7 +54,7 @@ app.controller('loginCtrl',function($scope,$http,$location){
     $scope.login=function() {
         var request = $http({
             method: "post",
-            url:"http://localhost/photo_gallery/services/loginProcessing.php",
+            url:"/phpphotogallery/services/loginProcessing.php",
             data: {
                 user: $scope.username,
                 pass: $scope.password
@@ -70,8 +62,9 @@ app.controller('loginCtrl',function($scope,$http,$location){
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
         request.success(function (response,status) {
-            if(status==204) {
-                alert("Wrong User");
+            if(status==401) {
+
+                $scope.AuthMessagge="Bab user Credintioal";
                 document.getElementById("User").value="";
                 document.getElementById("Password").value="";
 
@@ -80,22 +73,21 @@ app.controller('loginCtrl',function($scope,$http,$location){
                 console.log(response);
             }
         });
+        request.error(function(error){
+            $scope.AuthMessagge="Bab user Credintioal";
+            console.log("something went wrong");
+        })
     }
 });
-app.controller('postCtrl',function($scope,$http,$location){
+app.controller('postCtrl',function($scope,photoService,$location){
     $scope.postComment=function() {
         var  posting_id=$scope.photo.id;
-        var request = $http({
-            method: "post",
-            url:"http://localhost/photo_gallery/services/Post.php",
-            data: {
-                photo_id:posting_id,
-                author: $scope.comment.author,
-                comment: $scope.comment.body
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-        request.success(function (response,status) {
+        var data = {
+            photo_id: posting_id,
+            author: $scope.comment.author,
+            comment: $scope.comment.body
+        }
+        photoService.create(data).success(function (response,status) {
             if(status==204) {
                 alert("Something Went Wrong");
                 document.getElementById("body").value="";
@@ -109,45 +101,42 @@ app.controller('postCtrl',function($scope,$http,$location){
         });
     }
 });
-app.controller('deleteCtrl',function($scope,$http,$location){
+app.controller('deleteCtrl',function($scope,$location,photoService){
     $scope.delete_img=function(id) {
-         var photoId=id;
-
-        var request = $http({
-            method: "post",
-            url:"http://localhost/photo_gallery/services/delete_image.php",
-            data: {
-                photo_id:photoId
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-        request.success(function (response,status) {
-            if(status==204) {
-                alert("Wrong User");
-            }else{
-                $location.url('/view4');
-            }
+        var data={
+            photo_id: id
+        }
+        photoService.delete("delete_image.php",data).success(function (response) {
+            $location.url('/view3');
         });
     };
     $scope.deleteComment=function(id) {
-        var postId = id;
-        alert(postId);
-        var request = $http({
-            method: "post",
-            url: "http://localhost/photo_gallery/services/DeletePost.php",
-            data: {
-                postId: postId
-            },
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        });
-        request.success(function (response, status) {
+        var data={
+            postId: id
+        }
+        photoService.delete("DeletePost.php",data).success(function (response, status) {
             if (status == 204) {
                 alert("Bad User Credential");
             } else {
-
                 console.log(response)
             }
         });
     }
 });
-
+app.factory('photoService', function($http) {
+    var BASE_URL = '/phpphotogallery/services/';
+    return {
+        allPhotos: function() {
+            return $http.get(BASE_URL+"/"+"PhotoList.php");
+        },
+        create: function(post) {
+            return $http.post(BASE_URL+"/"+"Post.php", post);
+        },
+        delete: function(subpath,data) {
+            return $http.post(BASE_URL + '/'+subpath, data,{'Content-Type': 'application/x-www-form-urlencoded'});
+        },
+        PhotoComment:function(id){
+            return $http.get(BASE_URL+"/"+"PhotoService.php?id="+id);
+        }
+    };
+});
